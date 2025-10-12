@@ -1,25 +1,18 @@
 from fastapi import FastAPI
-from fastapi.middleware.cors import CORSMiddleware
+from datetime import datetime
 
 app = FastAPI()
 
-# Allow all origins — feel free to lock this down later
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
-
 @app.get("/price-engine")
-async def generate_price_tiers():
-    # Static response for now, can be replaced with ML or rule-based logic
+async def price_engine():
     return {
-        "tiers": [
-            {"name": "Starter", "price": 29},
-            {"name": "Growth", "price": 79},
-            {"name": "Scale", "price": 199}
-        ],
-        "strategy": "anchoring + decoy",
-        "model": "price-engine-v1.0.0"
+        "model": "price-engine-v1.0.0",
+        "status": "online",
+        "lastUpdated": str(datetime.utcnow().date()),
+        "data": {
+            "tier1_price": 9.99,
+            "tier2_price": 19.99,
+            "tier3_price": 29.99,
+            "recommended_tier": "tier2"
+        }
     }
