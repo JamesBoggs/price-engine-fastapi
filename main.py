@@ -1,7 +1,9 @@
+from ops_instrumentation import attach_ops
 from fastapi import FastAPI
 from datetime import datetime
 
 app = FastAPI()
+attach_ops(app)
 
 @app.get("/price-engine")
 async def price_engine():
